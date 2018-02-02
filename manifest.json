@@ -1,5 +1,16 @@
 {
-    "manifest_version": 1,
-    "name": "Clicker",
-    "version": "0.1"
+    "manifest_version": 2,
+    "name": "Arthur Intelligence",
+    "version": "0.1",
+    "content_scripts": [
+        {
+          "matches": [
+            "https://facebook.com/*", 
+            "http://facebook.com/*",
+            "https://www.facebook.com/*", 
+            "http://www.facebook.com/*"
+          ],
+          "js": ["jquery-3.3.1.js", "content.js"]
+        }
+      ]
   }
