@@ -1,6 +1,4 @@
 // content.js
-alert("Hello from Art! Be free of the burden of choice.");
-
 var clickedIn = false;
 var $logoLinks = $('a._19eb');
 
