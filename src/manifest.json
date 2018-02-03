@@ -2,7 +2,6 @@
     "manifest_version": 2,
     "name": "Arthur Intelligence",
     "version": "0.1",
-    "update_url": "http://artknowsbest.com",
     "content_scripts": [
         {
           "matches": [
