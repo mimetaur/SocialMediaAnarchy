@@ -1,0 +1,1 @@
+One of a series of bots made in my Major Studio II class for manipulating/subverting Facebook usage. This project is heavily inspired by [http://www.stfj.net/art/2009/loselose/](Lose/Lose), in that you leave it open to wreak havoc on your facebook profile and the more time you do, the higher you go on our leaderboard!
