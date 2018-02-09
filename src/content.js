@@ -5,6 +5,8 @@ var gifSelector = 'a[aria-label="Post a GIF"]';
 var emojiSelector = 'a[aria-label="Insert an emoji"]';
 var likeButtonSelector = 'a[data-testid="fb-ufi-likelink"]';
 var unlikeButtonSelector = 'a[data-testid="fb-ufi-unlikelink"]';
+var postTextareaSelector = 'textarea[name="xhpc_message"]';
+var postFormSelector = '#pagelet_composer form';
 var delay = 8000;
 
 function getRandomStory() {
@@ -19,35 +21,48 @@ function getRandomLink($story) {
     return $storyLinks.eq(randomLinkIndex);
 }
 
-function performRandomAction($story) {
+function clickLikeOrUnlike($story) {
+    var likeButtonEl = $story.find(likeButtonSelector)[0];
+    var unlikeButtonEl = $story.find(unlikeButtonSelector)[0];
+    if (!!likeButtonEl) {
+        console.log("Clicking the like button");
+        console.log(likeButtonEl);
+        likeButtonEl.click();
+    } else if (!!unlikeButtonEl) {
+        console.log("Clicking the unlike button");
+        // console.log(unlikeButtonEl);
+        // unlikeButtonEl.click();
+    }
+}
+
+function clickRandomLink($story) {
+    var $randomLink = getRandomLink($story);
+    $randomLink[0].click();
+}
+
+function scrollThenPerform($story, functionName) {
+    $('html, body').animate({ scrollTop: $story.offset().top }, 2000, function () {
+        window[functionName]($story);
+    });
+}
+
+function performRandomAction() {
+    var $story = getRandomStory();
+
     var probability = Math.random();
 
-    if (probability < 0.9) { // click the like/unlike button
-        var likeButtonEl = $story.find(likeButtonSelector)[0];
-        var unlikeButtonEl = $story.find(likeButtonSelector)[0];
-        if (!!likeButtonEl) {
-            console.log("Clicking the like button");
-            console.log(likeButtonEl);
-            likeButtonEl.click();
-        } else if (!!unlikeButtonEl) {
-            console.log("Clicking the unlike button");
-            console.log(unlikeButtonEl);
-            unlikeButtonEl.click();
-        }
+    if (probability < 0.5) {
+        console.log("Like Button");
+        scrollThenPerform($story, "clickLikeOrUnlike");
     } else {
-        console.log("Doing something else");
-        // var $randomLink = getRandomLink($story);
-        // $randomLink[0].click();
+        console.log("Clicking a random link within the story");
+        scrollThenPerform($story, "clickRandomLink");
     }
-
 }
 
 function scrollRandomly() {
     if ($('body').hasClass('composerExpanded')) {
-        var $randomStory = getRandomStory();
-        $('html, body').animate({ scrollTop: $randomStory.offset().top }, 2000, function () {
-            performRandomAction($randomStory);
-        });
+        performRandomAction();
     } else {
         $logoLinks[0].click();
     }
