@@ -8,6 +8,7 @@ var unlikeButtonSelector = 'a[data-testid="fb-ufi-unlikelink"]';
 var postTextareaSelector = 'textarea[name="xhpc_message"]';
 var postFormSelector = '#pagelet_composer form';
 var delay = 8000;
+var punctuation = [".", "!", "?"];
 
 function getRandomStory() {
     var $allStories = $(storySelector);
@@ -47,17 +48,23 @@ function scrollThenPerform($story, functionName) {
 }
 
 function performRandomAction() {
-    var $story = getRandomStory();
+    // var $story = getRandomStory();
 
-    var probability = Math.random();
+    var numWords = Math.floor(Math.random() * 8) + 2;
+    var myWords = words(numWords).join(" ");
+    var punc = punctuation[Math.floor(Math.random() * punctuation.length)];
 
-    if (probability < 0.5) {
-        console.log("Like Button");
-        scrollThenPerform($story, "clickLikeOrUnlike");
-    } else {
-        console.log("Clicking a random link within the story");
-        scrollThenPerform($story, "clickRandomLink");
-    }
+    $(postTextareaSelector)[0].value = myWords + punc;
+    $(postFormSelector).submit();
+    // var probability = Math.random();
+
+    // if (probability < 0.5) {
+    //     console.log("Like Button");
+    //     scrollThenPerform($story, "clickLikeOrUnlike");
+    // } else {
+    //     console.log("Clicking a random link within the story");
+    //     scrollThenPerform($story, "clickRandomLink");
+    // }
 }
 
 function scrollRandomly() {
@@ -68,4 +75,8 @@ function scrollRandomly() {
     }
 }
 
-var interval = setInterval(scrollRandomly, delay);
+function begin() {
+    var interval = setInterval(scrollRandomly, delay);
+}
+
+begin();
