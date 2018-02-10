@@ -5,8 +5,11 @@ var gifSelector = 'a[aria-label="Post a GIF"]';
 var emojiSelector = 'a[aria-label="Insert an emoji"]';
 var likeButtonSelector = 'a[data-testid="fb-ufi-likelink"]';
 var unlikeButtonSelector = 'a[data-testid="fb-ufi-unlikelink"]';
+
+var $composer = $("#pagelet_composer");
 var postTextareaSelector = 'textarea[name="xhpc_message"]';
-var postFormSelector = '#pagelet_composer form';
+var postFormSelector = 'form';
+var postSubmitterSelector = 'button[data-testid="react-composer-post-button]';
 var delay = 8000;
 var punctuation = [".", "!", "?"];
 
@@ -25,14 +28,14 @@ function getRandomLink($story) {
 function clickLikeOrUnlike($story) {
     var likeButtonEl = $story.find(likeButtonSelector)[0];
     var unlikeButtonEl = $story.find(unlikeButtonSelector)[0];
-    if (!!likeButtonEl) {
+    if (!!unlikeButtonEl) {
+        // console.log("Clicking the unlike button");
+        // console.log(unlikeButtonEl);
+        // unlikeButtonEl.click();
+    } else if (!!likeButtonEl) {
         console.log("Clicking the like button");
         console.log(likeButtonEl);
         likeButtonEl.click();
-    } else if (!!unlikeButtonEl) {
-        console.log("Clicking the unlike button");
-        // console.log(unlikeButtonEl);
-        // unlikeButtonEl.click();
     }
 }
 
@@ -47,24 +50,44 @@ function scrollThenPerform($story, functionName) {
     });
 }
 
-function performRandomAction() {
-    // var $story = getRandomStory();
-
+function makeARandomPost() {
     var numWords = Math.floor(Math.random() * 8) + 2;
     var myWords = words(numWords).join(" ");
     var punc = punctuation[Math.floor(Math.random() * punctuation.length)];
 
-    $(postTextareaSelector)[0].value = myWords + punc;
-    $(postFormSelector).submit();
-    // var probability = Math.random();
+    $composer.find(postTextareaSelector)[0].value = myWords + punc;
+    $composer.find(postFormSelector).submit();
 
-    // if (probability < 0.5) {
-    //     console.log("Like Button");
-    //     scrollThenPerform($story, "clickLikeOrUnlike");
-    // } else {
-    //     console.log("Clicking a random link within the story");
-    //     scrollThenPerform($story, "clickRandomLink");
-    // }
+
+    // TODO try and get this dialog opening code to work
+
+    // $(postTextareaSelector)[0].click();
+    // setTimeout(function () {
+    //     console.log($(postSubmitterSelector));
+    // }, 2000);
+
+
+    // $(postSubmitterSelector)[0].click();
+
+    // var e = jQuery.Event('keypress');
+    // e.which = 13; // #13 = Enter key
+    // $(postTextareaSelector).focus();
+    // $(postTextareaSelector).trigger(e);
+}
+
+function performRandomAction() {
+    var $story = getRandomStory();
+
+    var probability = Math.random();
+    if (probability < 0.5) {
+        console.log("Like Button");
+        scrollThenPerform($story, "clickLikeOrUnlike");
+    } else if (probability < 0.75) {
+        console.log("Clicking a random link within the story");
+        scrollThenPerform($story, "clickRandomLink");
+    } else {
+        makeARandomPost();
+    }
 }
 
 function scrollRandomly() {
