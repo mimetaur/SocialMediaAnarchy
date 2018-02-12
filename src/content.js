@@ -11,7 +11,7 @@ var postTextareaSelector = 'textarea[name="xhpc_message"]';
 var postFormSelector = 'form';
 var postSubmitterSelector = 'button[data-testid="react-composer-post-button]';
 var delay = 8000;
-var punctuation = [".", "!", "?"];
+var punctuation = [".", "!", "?", ", screw you too!", ", total bullshit!", ", how do you like it now?"];
 
 function getRandomStory() {
     var $allStories = $(storySelector);
